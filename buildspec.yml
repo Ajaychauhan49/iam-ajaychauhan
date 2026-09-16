@@ -1,0 +1,27 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_REGISTRY_USERNAME: /myapp/docker-credientials/username
+    DOCKER_REGISTRY_PASSWORD: /myapp/docker-credientials/password
+    DOCKER_REGISTRY_URL: /myapp/docker-credientials/docker-url
+    
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+  
+  pre_build:
+    commands:
+      - pip install -r requirements.txt
+  
+  build:
+    commands:
+      - echo "Building Docker Image"
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin docker.io
+      - docker build -t "$DOCKER_REGISTRY_URL:simple-python-flask-app" .
+      - docker push "$DOCKER_REGISTRY_URL:simple-python-flask-app"
+      
+  post_build:
+    commands:
+      - echo "Build is Sucessful"
