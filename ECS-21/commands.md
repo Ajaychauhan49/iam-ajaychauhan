@@ -5,4 +5,4 @@ Build the Docker image (replace with your ECR repository name)
 $ docker build -t .dkr.ecr..amazonaws.com/:latest .
 
 Push the Docker image to ECR (replace with your ECR repository name)
-$ docker push .dkr.ecr..amazonaws.com/:latest
+$ docker push .dkr.ecr..amazonaws.com/:latest>
